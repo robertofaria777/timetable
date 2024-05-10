@@ -1,12 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>GT4 European</title>
+    <title>Aston Martin Event Countdown</title>
+    <style>
+        body {
+            background-color: #1A202C;
+            color: #A0AEC0;
+            font-family: Arial, sans-serif;
+        }
+        .aston-martin-theme {
+            color: #006F62;
+        }
+        table, th, td {
+            border: 1px solid #A0AEC0;
+            padding: 5px;
+        }
+        .highlight {
+            background-color: #006F62;
+            color: #A0AEC0;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1 class="aston-martin-theme">Aston Martin Event Countdown</h1>
+    </header>
+    <main>
+       <section id="countdown">
+            <h2 class="aston-martin-theme">Countdown to Nearest Event</h2>
+            <p id="countdownTimer"></p>
+        </section>
+          <section id="timetable">
+            <h2 class="aston-martin-theme">Timetable (Original Timezone)</h2>
+            <table class="highlight">
+                <tr>
+                    <th>Event</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+                <tr>
+                    <td>Qualy</td>
+                    <td>18/05/2024 09:35</td>
+                    <td>18/05/2024 10:35</td>
+                </tr>
+                <tr>
+                    <td>Race 1</td>
+                    <td>18/05/2024 16:35</td>
+                    <td>18/05/2024 17:35</td>
+                </tr>
+                <tr>
+                    <td>Race 2</td>
+                    <td>19/05/2024 12:15</td>
+                    <td>19/05/2024 13:15</td>
+                </tr>
+            </table>
+        </section>
+        <section id="timetable-brazil">
+            <h2 class="aston-martin-theme">Timetable (Brazilian Timezone)</h2>
+            <table class="highlight">
+                <tr>
+                    <th>Event</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+                <tr>
+                    <td>Qualy</td>
+                    <td>18/05/2024 04:35</td>
+                    <td>18/05/2024 05:35</td>
+                </tr>
+                <tr>
+                    <td>Race 1</td>
+                    <td>18/05/2024 11:35</td>
+                    <td>18/05/2024 12:35</td>
+                </tr>
+                <tr>
+                    <td>Race 2</td>
+                    <td>19/05/2024 07:15</td>
+                    <td>19/05/2024 08:15</td>
+                </tr>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Aston Martin</p>
+    </footer>
+    <script>
+        var events = [
+            {name: 'Qualy', start: new Date('2024-05-18T08:35:00'), end: new Date('2024-05-18T9:35:00')},
+            {name: 'Race 1', start: new Date('2024-05-18T15:35:00'), end: new Date('2024-05-18T16:35:00')},
+            {name: 'Race 2', start: new Date('2024-05-19T11:15:00'), end: new Date('2024-05-19T12:15:00')}
+        ];
 
-<h1>Timetable</h1>
-<p>This is the timetable for the next GT4 European round.</p>
+        function getNearestEvent(events) {
+            var now = new Date();
+            return events.reduce(function(nearest, event) {
+                return event.start > now && event.start < nearest.start ? event : nearest;
+            }, {start: Infinity});
+        }
 
+        function startCountdown() {
+            var nearestEvent = getNearestEvent(events);
+            var countdown = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = nearestEvent.start - now;
+
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("countdownTimer").innerHTML = nearestEvent.name + " starts in " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                if (distance < 0) {
+                    clearInterval(countdown);
+                    document.getElementById("countdownTimer").innerHTML = nearestEvent.name + " has started";
+                }
+            }, 1000);
+        }
+
+        startCountdown();
+    </script>
 </body>
 </html>
