@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Aston Martin Event Countdown; font-size: 200%;</title>
+    <title>Aston Martin Event Countdown</title>
     <style>
         body {
             background-color: #1A202C;
             color: #A0AEC0;
-            font-size: 200%;
             font-family: Arial, sans-serif;
+            font-size: 200%; /* Increase the font size */
+            text-align: center; /* Center align the whole website */
         }
         .aston-martin-theme {
             color: #006F62;
         }
         table, th, td {
             border: 1px solid #A0AEC0;
-            padding: 10px;
+            padding: 10px; /* Increase the padding */
+            margin: 0 auto; /* Center align the table */
         }
         .highlight {
             background-color: #006F62;
             color: #A0AEC0;
+        }
+        #countdownTimer {
+            font-size: 3em; /* Make the countdown timer larger */
+            font-weight: bold; /* Make the countdown timer bold */
+        }
+        #countdownTimer span {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        #countdownTimer span::after {
+            content: attr(data-label);
+            display: block;
+            font-size: 0.5em;
+            font-weight: normal;
+        }
+        #eventName {
+            font-size: 4em; /* Make the event name larger */
+            font-weight: bold; /* Make the event name bold */
         }
     </style>
 </head>
@@ -29,8 +49,10 @@
     <main>
        <section id="countdown">
             <h2 class="aston-martin-theme">Countdown to Nearest Event</h2>
+            <p id="eventName"></p> <!-- Add a new paragraph for the event name -->
             <p id="countdownTimer"></p>
         </section>
+<body>
           <section id="timetable">
             <h2 class="aston-martin-theme">Timetable (Original Timezone)</h2>
             <table class="highlight">
@@ -101,6 +123,7 @@
 
         function startCountdown() {
             var nearestEvent = getNearestEvent(events);
+            document.getElementById("eventName").innerHTML = nearestEvent.name; /* Display the event name */
             var countdown = setInterval(function() {
                 var now = new Date().getTime();
                 var distance = nearestEvent.start - now;
@@ -110,7 +133,11 @@
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                document.getElementById("countdownTimer").innerHTML = nearestEvent.name + " starts in " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                document.getElementById("countdownTimer").innerHTML = 
+                    '<span data-label="DAYS">' + days + '</span>' +
+                    '<span data-label="HRS">' + hours + '</span>' +
+                    '<span data-label="MINS">' + minutes + '</span>' +
+                    '<span data-label="SECS">' + seconds + '</span>';
 
                 if (distance < 0) {
                     clearInterval(countdown);
