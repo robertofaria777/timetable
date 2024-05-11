@@ -47,6 +47,24 @@
             width: fit-content;
             border-radius: 5px;
         }
+        .external-link-button {
+            background: &#128250 no-repeat center; /
+            background-size: cover; /* This will scale the image to fit the button */
+            color: #A0AEC0; /* Change this to your preferred color */
+            padding: 10px 20px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            transition-duration: 0.4s;
+        }
+        .external-link-button:hover {
+            background-color: #A0AEC0; /* Change this to your preferred color */
+            color: #1A202C; /* Change this to your preferred color */
+        }
     </style>
 </head>
 <body>
@@ -62,6 +80,7 @@
            <!-- Add the link here -->
             <a href="https://www.gt4europeanseries.com/watch-live" target="_blank">Live from Youtube GT World!</a>
          </div>
+           <button class="external-link-button" onclick="window.location.href='https://www.gt4europeanseries.com/watch-live';">Go to watch live!</button>
         </section>
 <body>
           <section id="timetable">
